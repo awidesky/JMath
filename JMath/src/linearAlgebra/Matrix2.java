@@ -1,12 +1,14 @@
 package linearAlgebra;
 
+import exceptions.MatrixMultiplicationException;
+
 public class Matrix2 {
 
 	private int data[][];
 	private int demicalPoint;
 	
-	public final int row, column;
-	public final boolean isSquare;
+	private int row, column;
+	private boolean isSquare;
 	
 	public Matrix2(int input[][]) {
 		// TODO Auto-generated constructor stub
@@ -98,6 +100,12 @@ public class Matrix2 {
 		// TODO Auto-generated method stub
 		return data[i-1][j-1];
 	} // get end
+	
+	public int getrow() { return row; }
+	
+	public int getcolumn() { return column; }
+	
+	public boolean isSquare() { return isSquare; }
 
 
 	public Matrix2 plus(Matrix2 b) {
@@ -119,14 +127,27 @@ public class Matrix2 {
 		return result;
 	} // plus end
 	
-	public Matrix2 times(Matrix2 b) {
+	public Matrix2 times(Matrix2 b) throws MatrixMultiplicationException {
 		
-		if (this.row != b.row || this.column != b.column) return null;
+		if (this.row != b.row || this.column != b.column) throw new MatrixMultiplicationException("unable to Multiplication- " + column + " != " + b.row);
 		
-		Matrix2 result = new Matrix2(row, column);
+		Matrix2 result = new Matrix2(row, b.column);
 		
+		for(int r = 1 ; r <= b.row ; r++) {
+			
+			for(int c = 1 ; c <= column ; c++) {
+				
+				for(int k = 1 ; k <= column ; k++) {
+					
+					result.set(r, c, this.get(r, k) * b.get(k, c));
+					
+				}
+				
+			}
+			
+		}
 		
-		return result;
+		return result; 
 	}
 	
 	
