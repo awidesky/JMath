@@ -108,9 +108,9 @@ public class Matrix2 {
 	public boolean isSquare() { return isSquare; }
 
 
-	public Matrix2 plus(Matrix2 b) {
+	public Matrix2 plus(Matrix2 b) throws MatrixMultiplicationException {
 		
-		if (this.row != b.row || this.column != b.column) return null;
+		if (this.row != b.row || this.column != b.column) throw new MatrixMultiplicationException("unable to Add- " + row + " != " + b.row + " or " + column + " != " + b.column);
 		
 		Matrix2 result = new Matrix2(this.row, this.column);
 		

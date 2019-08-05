@@ -20,6 +20,27 @@ public class Vector3 {
 		
 	}
 	
+	public Vector3 plus(Vector3 v) {
+		
+		return new Vector3(x + v.x, y + v.y, z + v.z);
+		
+	}
+
+	public void subtract(Vector3 v) {
+		
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+		
+	}
+	
+	public Vector3 minus(Vector3 v) {
+		
+		return new Vector3(x - v.x, y - v.y, z - v.z);
+		
+	}
+
+	
 	public void addScaledVertor(Vector3 v, double scale) {
 		
 		x += v.x * scale;
@@ -54,7 +75,8 @@ public class Vector3 {
 		
 		return c;
 		
-	}	
+	}
+	
 	public double ScalarProduct(Vector3 v) {
 		
 		return (x * v.x) + (y * v.y) + (z * v.z);
