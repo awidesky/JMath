@@ -40,7 +40,7 @@ public class EParallelism {
 							divider = divider.multiply(n1);
 						
 						}
-						
+						// TODO : n의 배수항 계산법 찾아내기
 						n1 = n1.add(BigDecimal.ONE);
 						
 					} while(num.compareTo(new BigDecimal("0.1").pow(scale)) > 0);
