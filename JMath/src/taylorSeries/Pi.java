@@ -8,8 +8,8 @@ public class Pi {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		final int DIGITS = 10000;
-		final int CUT = 200;
+		final int DIGITS = 1000;
+		final int CUT = 20;
 		
 		BigInteger i = BigInteger.ONE;
 		BigInteger x = new BigInteger("3").multiply(BigInteger.TEN.pow(DIGITS + CUT));
@@ -18,7 +18,7 @@ public class Pi {
 		final BigInteger TWO = new BigInteger("2");
 		final BigInteger FOUR = new BigInteger("4");
 		
-		long num = 1L;
+		//long num = 1L;
 		
 		while (x.compareTo(BigInteger.ZERO) == 1) {
 			
@@ -26,8 +26,8 @@ public class Pi {
 		    pi = pi.add(x.divide(i.add(TWO)));
 			i = i.add(TWO);
 			
-			if (num % 100 == 1) System.out.println(num);
-			num++;
+			//if (num % 100 == 1) System.out.println(x);
+			//num++;
 			
 		}
 		
