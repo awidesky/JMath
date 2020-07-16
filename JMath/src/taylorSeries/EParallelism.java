@@ -1,19 +1,29 @@
 package taylorSeries;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 import parallelism.NThread;
 
 public class EParallelism {
 
+	
+	public static BigDecimal E = BigDecimal.ZERO;
+	public static int collected = 0;
+	public static final int cores = Runtime.getRuntime().availableProcessors();
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		start(cores);
 		
-		final int cores = Runtime.getRuntime().availableProcessors();
+	}
+	
+	
+	public static void start(int threadNumbers)	{
 		
-		for (int n = 1 ; n <= cores ; n++) {
+		//TODO : fix error
+		for (int n = 1 ; n <= threadNumbers ; n++) {
 			
 			NThread th = new NThread(n) {
 			
@@ -27,7 +37,7 @@ public class EParallelism {
 					BigDecimal divider = BigDecimal.ONE;
 					BigDecimal num = BigDecimal.ONE;
 					
-					BigDecimal n1 = BigDecimal.ONE;
+					BigDecimal n1 = BigDecimal.ONE; // Ç× ¹øÈ£
 					
 					do {
 						
@@ -37,6 +47,7 @@ public class EParallelism {
 						for (int i = 1 ; i <= n ; i++) {
 						
 							x = x.multiply(x);
+							n1 = n1.add(BigDecimal.ONE);
 							divider = divider.multiply(n1);
 						
 						}
@@ -45,13 +56,24 @@ public class EParallelism {
 						
 					} while(num.compareTo(new BigDecimal("0.1").pow(scale)) > 0);
 					
-					System.out.println(e);
+					EParallelism.collect(e);
 					
 				}
 				
 			};
 			
+			th.start();
+			
 		}
+		
+	}
+
+	public static synchronized void collect(BigDecimal e) {
+		/** Collect value of e of each <code>Thread</code>s and adds them*/
+		
+		collected++;
+		E = E.add(e);
+		if (collected == cores) { System.out.println(E); }
 		
 	}
 		
