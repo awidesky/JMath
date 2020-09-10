@@ -5,14 +5,19 @@ import java.math.BigInteger;
 
 public class Pi {
 
+		private static final int cutOff = 20;
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		final int DIGITS = 1000;
-		final int CUT = 20;
+		System.out.println(getPi(100));
+			
+	}
+	
+	
+	public static BigDecimal getPi(int digit) {
 		
 		BigInteger i = BigInteger.ONE;
-		BigInteger x = new BigInteger("3").multiply(BigInteger.TEN.pow(DIGITS + CUT));
+		BigInteger x = new BigInteger("3").multiply(BigInteger.TEN.pow(digit + cutOff));
 		BigInteger pi = x;
 		
 		final BigInteger TWO = new BigInteger("2");
@@ -31,9 +36,9 @@ public class Pi {
 			
 		}
 		
-		BigDecimal result = new BigDecimal(pi.divide(BigInteger.TEN.pow(CUT))).divide(new BigDecimal(BigInteger.TEN.pow(DIGITS)));
+		//BigDecimal result = new BigDecimal(pi.divide(BigInteger.TEN.pow(CUT))).divide(new BigDecimal(BigInteger.TEN.pow(DIGITS)));
 		
-		System.out.println(result);
+		return new BigDecimal(pi.divide(BigInteger.TEN.pow(cutOff))).divide(new BigDecimal(BigInteger.TEN.pow(digit)));
 		
 	}
 
