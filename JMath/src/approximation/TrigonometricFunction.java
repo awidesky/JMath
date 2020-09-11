@@ -1,6 +1,7 @@
 package approximation;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -10,6 +11,9 @@ import taylorSeries.Sin;
 public class TrigonometricFunction {
 
 	public final static BigDecimal PI = Pi.getPi(100);
+	public final static BigDecimal a = new BigDecimal("-0.44");//-0.439 or -0.44(latter is better)
+	public final static BigDecimal halfPI = PI.multiply(new BigDecimal("0.5"));
+	
 	
 	public static void main(String[] args) {
 		
@@ -18,9 +22,14 @@ public class TrigonometricFunction {
 	}
 	
 	
-	public static void getSin() {
+	public static BigDecimal getSin(final BigDecimal x, int scale) {
 		
+		if (x.compareTo(PI.multiply(new BigDecimal(2))) > 0) return getSin(x.remainder(PI.multiply(new BigDecimal(2)), new MathContext(x.precision())), scale);
+		if (x.compareTo(PI) > 0) return getSin(x.subtract(PI), scale).multiply(new BigDecimal("-1"));
+		if (x.compareTo(PI.divide(new BigDecimal(2))) > 0) return getSin(PI.subtract(x), scale);
+
 		
+		return a.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, BigDecimal.ROUND_HALF_UP);
 		
 	}
 	
@@ -30,23 +39,27 @@ public class TrigonometricFunction {
 		
 		int scale = 100;
 		
+		BigDecimal half = new BigDecimal("0.5");
 		BigDecimal Epsilon = new BigDecimal("0.00001");
-		BigDecimal a = new BigDecimal("96").divide(PI.pow(3), scale, BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal("24").divide(PI.pow(2), scale, BigDecimal.ROUND_HALF_UP));
-		BigDecimal b = new BigDecimal("0.1");
-		//BigDecimal negativeHalf = new BigDecimal("-0.5");
-		
-		for (BigDecimal x = new BigDecimal("0.25").add(Epsilon) ; x.compareTo(PI) < 0 ; x = x.add(Epsilon)) {
+		//BigDecimal a = new BigDecimal("96").divide(PI.pow(3), scale, BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal("24").divide(PI.pow(2), scale, BigDecimal.ROUND_HALF_UP));
+		//BigDecimal b = new BigDecimal("0.1");
+
+		//for (; a.compareTo(new BigDecimal("-0.445")) >= 0 ; a = a.add(new BigDecimal("-0.001"))) {
 			
-			//b = x.multiply(negativeHalf);
-			BigDecimal y0 = a.multiply(x).add(b);
-			BigDecimal result = BigDecimal.ONE.subtract(y0.divide(Sin.getSin(x, scale), scale, BigDecimal.ROUND_HALF_UP)).abs();
+		for (BigDecimal x = new BigDecimal("0.2") ; x.compareTo(PI.multiply(half)) < 0 ; x = x.add(Epsilon)) {
+			
+			//BigDecimal y0 = a.multiply(x).add(b);
+			BigDecimal y0 = a.multiply(x.subtract(PI.multiply(new BigDecimal("0.5"))).pow(2)).add(BigDecimal.ONE);
+			BigDecimal result = Sin.getSin(x, scale).subtract(y0).abs();
 			
 			error.add(result);
 
+			
 		}
 		
+		System.out.println("a : " + a);
 		System.out.println("size : " + error.size());
-		System.out.println("max : " + Collections.max(error));
+		System.out.println("max : " + Collections.max(error) );
 		System.out.println("min : " + Collections.min(error));
 		
 		BigDecimal sum = BigDecimal.ZERO;
@@ -58,6 +71,10 @@ public class TrigonometricFunction {
 		}
 		
 		System.out.println("evg : " + sum.divide(new BigDecimal(error.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println();
+		error = new LinkedList<>();
+		
+		//}
 		
 	}
 	
