@@ -27,7 +27,7 @@ public class TrigonometricFunction {
 		if (x.compareTo(PI.multiply(new BigDecimal(2))) > 0) return getSin(x.remainder(PI.multiply(new BigDecimal(2)), new MathContext(x.precision())), scale);
 		if (x.compareTo(PI) > 0) return getSin(x.subtract(PI), scale).multiply(new BigDecimal("-1"));
 		if (x.compareTo(PI.divide(new BigDecimal(2))) > 0) return getSin(PI.subtract(x), scale);
-                if (x.compareTo(new Bigdecimal("2")) <= 0) return x;
+                if (x.compareTo(new Bigdecimal(2)) <= 0) return x;
 		
 
 		return a.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, BigDecimal.ROUND_HALF_UP);
