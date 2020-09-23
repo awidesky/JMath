@@ -9,11 +9,11 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		testSineDouble();
+		testSineTime();
 		
 	}
 		
-	public static void testSine() {
+	public static void testSineTime() {
 		long start;
 		int scale = 100;
 		BigDecimal x = new BigDecimal("1.54");
@@ -52,7 +52,7 @@ public class Test {
 			
 		}
 		
-		System.out.println("evg r : " + sum.divide(new BigDecimal(sin.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg time r : " + sum.divide(new BigDecimal(sin.size()), 20, BigDecimal.ROUND_HALF_UP));
 		
 		BigDecimal sum2 = BigDecimal.ZERO;
 		
@@ -62,7 +62,7 @@ public class Test {
 			
 		}
 		
-		System.out.println("evg a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg time a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, BigDecimal.ROUND_HALF_UP));
 	
 		System.out.println("real : " + Sin.getSin(x, scale) + "\napprox : " + TrigonometricFunction.getSin(x, scale));
 	
@@ -70,7 +70,7 @@ public class Test {
 
 	
 	
-	public static void testSineDouble() {
+	public static void testDoubleSineTime() {
 		
 		long start;
 		double x = 7;

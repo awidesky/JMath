@@ -23,17 +23,27 @@ public class TrigonometricFunction {
 	}
 	
 	
+	/**
+	 * <p>Returns the trigonometric sine of an angle.
+	 * 
+	 * <p>How it works:
+	 * <ul><p> 1. make <code>x</code> between [0,<code>pi</code>/2]
+	 * <p> 2. if 0 &lt; <code>x</code> &lt; 0.236872109056403, sin(<code>x</code>) = x
+	 * <p> 3. if 0.236872109056403 &lt; <code>x</code> &lt; 0.666358419264344, sin(<code>x</code>) = -0.1<code>x</code>(<code>x</code>-<code>pi</code>)(<code>x</code>+<code>pi</code>)
+	 * <p> 4. if 0.666358419264344 &lt; <code>x</code> &lt; <code>pi</code>/2 , sin(<code>x</code>) = -0.46(<code>x</code>-<code>pi</code>/2)^2 + 1</ul>
+	 *  
+	 * 
+	 * <p>this method works 10 to 8 faster than Taylor series, and error is under 0.0099, average .
+	 *  
+	 * */
 	public static BigDecimal getSin(final BigDecimal x, int scale) {
 		
-		/**
-		 * 
-		 * this function works 10 to 8 faster than Taylor series, and error is about 0.00004.
-		 * 
-		 * */
 		
+		if (x.compareTo(BigDecimal.ZERO) < 0) return new BigDecimal("-1").multiply(getSin(x, scale));
 		
-        if (x.compareTo(BigDecimal.ZERO) < 0) return new BigDecimal("-1").multiply(getSin(x, scale));
-		if (x.compareTo(new BigDecimal("0.41")) <= 0) return x;
+		if (x.compareTo(new BigDecimal("0.236872109056403")) <= 0) return x;
+		if (x.compareTo(new BigDecimal("0.666358419264344")) <= 0) return x.multiply(new BigDecimal("-1")).multiply(x.subtract(PI)).multiply(x.add(PI)).setScale(scale, BigDecimal.ROUND_HALF_UP);
+		
 		if (x.compareTo(PI.multiply(new BigDecimal(2))) > 0) return getSin(x.remainder(PI.multiply(new BigDecimal(2)), new MathContext(x.precision())), scale);
 		if (x.compareTo(PI) > 0) return getSin(x.subtract(PI), scale).multiply(new BigDecimal("-1"));
 		if (x.compareTo(PI.divide(new BigDecimal(2))) > 0) return getSin(PI.subtract(x), scale);
@@ -56,7 +66,7 @@ public class TrigonometricFunction {
 		 * */
 		
 		if (x < 0) return -getSin(x);
-		if (x <= 0.41) return x;
+		if (x <= 0.236872109056403) return x;
 		if (x > Math.PI*2) return getSin(x % (Math.PI*2));
 		if (x > Math.PI) return (-1) * getSin(x - Math.PI);
 		if (x > Math.PI/2) return getSin(Math.PI - x);
@@ -66,6 +76,8 @@ public class TrigonometricFunction {
 		return aDouble*Math.pow(x - (Math.PI/2), 2) + 1;
 		
 	}
+	
+	
 	
 	private static void ErrorTestSinLinear() {
 		
