@@ -8,7 +8,19 @@ import java.util.LinkedList;
 import taylorSeries.Pi;
 import taylorSeries.Sin;
 
-public class TrigonometricFunction {
+
+
+/*
+a : -0.484683 err : 0.001419
+a : -0.484682 err : 0.001418
+a : -0.484681 err : 0.001418
+a : -0.484680 err : 0.001417
+a : -0.484679 err : 0.001417
+a : -0.484678 err : 0.001417
+a : -0.484677 err : 0.001417
+a : -0.484676 err : 0.001418
+*/
+public class TrigonometricFunction { //TODO : x가 0.9보다 작으면 -0.467, 0.9보다 크면 위에꺼
 
 	public final static BigDecimal PI = Pi.getPi(100);
 	public final static BigDecimal a = new BigDecimal("-0.46");
@@ -47,7 +59,6 @@ public class TrigonometricFunction {
 		if (x.compareTo(PI.multiply(new BigDecimal(2))) > 0) return getSin(x.remainder(PI.multiply(new BigDecimal(2)), new MathContext(x.precision())), scale);
 		if (x.compareTo(PI) > 0) return getSin(x.subtract(PI), scale).multiply(new BigDecimal("-1"));
 		if (x.compareTo(PI.divide(new BigDecimal(2))) > 0) return getSin(PI.subtract(x), scale);
-
 		
 
 		return a.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, BigDecimal.ROUND_HALF_UP);
@@ -55,15 +66,14 @@ public class TrigonometricFunction {
 	}
 	
 	
+	/**
+	 * 
+	 * this function works faster than <code>Math#sin</code> when <code>x</code>is between around 1 and 7, and error is about 0.00004.
+	 * 
+	 * */
 	
 	public static double getSin(final double x) {
 		
-		
-		/**
-		 * 
-		 * this function works faster than <code>Math#sin</code> when <code>x</code>is between around 1 and 7, and error is about 0.00004.
-		 * 
-		 * */
 		
 		if (x < 0) return -getSin(x);
 		if (x <= 0.236872109056403) return x;
@@ -147,11 +157,11 @@ public class TrigonometricFunction {
 				}
 				System.out.println("one loop of b" + b);
 			}
-			System.out.println("one loop of a" + a);
+			//System.out.println("one loop of a" + a);
 		//}
 		
 		
-		System.out.println("a : " + nums[0].toString());
+		//System.out.println("a : " + nums[0].toString());
 		System.out.println("b : " + nums[1].toString());
 		System.out.println("error : " + nums[2].toString());
 		
