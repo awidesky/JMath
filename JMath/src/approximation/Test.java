@@ -1,19 +1,26 @@
 package approximation;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.LinkedList;
 
+import taylorSeries.Pi;
 import taylorSeries.Sin;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static BigDecimal Epsilon = new BigDecimal("0.00001");
+	
+	public static void main(String[] args) throws IOException {
 
-		testSineTime();
+		testSineErr();
 		
 	}
 		
 	public static void testSineTime() {
+		
 		long start;
 		int scale = 100;
 		BigDecimal x = new BigDecimal("1.54");
@@ -125,6 +132,53 @@ public class Test {
 		System.out.println("real : " + Math.sin(x) + "\napprox : " + TrigonometricFunction.getSin(x));
 	
 	}
+	
+	
+	public static void testSineErr() throws IOException {
+		
+		
+		int scale = 100;
+		BigDecimal x = new BigDecimal("0");
+		BigDecimal PI = Pi.getPi(scale);
+		
+		LinkedList<BigDecimal> sinApporx = new LinkedList<>();
+		
+		System.out.println("testSineErr start");
+		
+		new File("test.txt").createNewFile();
+		//PrintWriter pw = new PrintWriter(new File("test.txt"));
+		
+		for (; x.compareTo(PI) <= 0 ; x = x.add(Epsilon)) {
+			
+			sinApporx.add(Sin.getSin(x, scale).subtract(TrigonometricFunction.getSin(x, scale)).abs());
+			//pw.println(x + "\n" +Sin.getSin(x, scale).subtract(TrigonometricFunction.getSin(x, scale)).abs() + "\n");
+			
+		}
+		
+		  System.out.println("cal end");
+		  
+		  BigDecimal sum = BigDecimal.ZERO;
+		  
+		  
+		  for (BigDecimal i2 : sinApporx) {
+		  
+		  sum = sum.add(i2);
+		  
+		  }
+		  
+		  BigDecimal xErr = BigDecimal.ZERO;
+		  
+		  xErr = xErr.add(Epsilon.multiply(new BigDecimal(sinApporx.indexOf(Collections.max(sinApporx)))));
+		  
+		  
+		  
+		  System.out.println("evg err     : " + sum.divide(new
+		  BigDecimal(sinApporx.size()), 20, BigDecimal.ROUND_HALF_UP));
+		  
+		  System.out.println("highest err : " + Collections.max(sinApporx) + "\nin : " + xErr);
+		 
+	}
+
 
 	
 }

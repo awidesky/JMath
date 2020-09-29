@@ -14,7 +14,12 @@ public class Sin {
 
 	}
 
-	public static BigDecimal getSin(final BigDecimal x, int scale) {
+	/**
+	 * 
+	 * Calculate <code>sin</code> with Taylor series.
+	 * 
+	 * */
+	public static BigDecimal getSin(final BigDecimal x, final int scale) {
 		
 		if (x.compareTo(PI.multiply(new BigDecimal(2))) > 0) return getSin(x.remainder(PI.multiply(new BigDecimal(2)), new MathContext(x.precision())), scale);
 		if (x.compareTo(PI) > 0) return getSin(x.subtract(PI), scale).multiply(new BigDecimal("-1"));
