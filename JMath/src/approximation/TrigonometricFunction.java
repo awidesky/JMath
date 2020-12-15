@@ -114,9 +114,9 @@ public class TrigonometricFunction {
 		
 		
 		if (x < 0.591385707016756) return -0.1*x*(x-Math.PI)*(x+Math.PI);
-		if (x < 0.801774927340932) return a1Double*Math.pow(x - (Math.PI/2), 2) + 1;
+		if (x < 0.801774927340932) return a1Double*( (x - (Math.PI/2)) * (x - (Math.PI/2)) ) + 1;
 		
-		return a2Double*Math.pow(x - (Math.PI/2), 2) + 1;
+		return a2Double*( (x - (Math.PI/2)) * (x - (Math.PI/2)) ) + 1;
 		
 	}
 	
