@@ -2,6 +2,7 @@ package approximation;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -55,7 +56,7 @@ public class SinTest {
 
 		}
 
-		System.out.println("evg time r : " + sum.divide(new BigDecimal(sin.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg time r : " + sum.divide(new BigDecimal(sin.size()), 20, RoundingMode.HALF_UP));
 
 		BigDecimal sum2 = BigDecimal.ZERO;
 
@@ -66,7 +67,7 @@ public class SinTest {
 		}
 
 		System.out
-				.println("evg time a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, BigDecimal.ROUND_HALF_UP));
+				.println("evg time a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, RoundingMode.HALF_UP));
 
 		System.out.println("real : " + Sin.getSin(x, scale) + "\napprox : " + TrigonometricFunction.getSin(x, scale));
 
@@ -108,7 +109,7 @@ public class SinTest {
 
 		}
 
-		System.out.println("evg r : " + sum.divide(new BigDecimal(sin.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg r : " + sum.divide(new BigDecimal(sin.size()), 20, RoundingMode.HALF_UP));
 
 		BigDecimal sum2 = BigDecimal.ZERO;
 
@@ -118,7 +119,7 @@ public class SinTest {
 
 		}
 
-		System.out.println("evg a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg a : " + sum2.divide(new BigDecimal(sinApporx.size()), 20, RoundingMode.HALF_UP));
 
 		System.out.println("real : " + Math.sin(x) + "\napprox : " + TrigonometricFunction.getSin(x));
 
@@ -164,7 +165,7 @@ public class SinTest {
 
 		xErr = xErr.add(Epsilon.multiply(new BigDecimal(errorAmount.indexOf(Collections.max(errorAmount)))));
 
-		System.out.println("evg err     : " + sum.divide(new BigDecimal(errorAmount.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg err     : " + sum.divide(new BigDecimal(errorAmount.size()), 20, RoundingMode.HALF_UP));
 
 		System.out.println("highest err : " + Collections.max(errorAmount) + "\nin x = " + xErr);
 
@@ -190,7 +191,7 @@ public class SinTest {
 
 		for (; x.compareTo(PI) <= 0; x = x.add(Epsilon)) {
 
-			errorAmount.add(BigDecimal.ONE.subtract(TrigonometricFunction.getSin(x, scale).divide(Sin.getSin(x, scale), scale, BigDecimal.ROUND_HALF_UP)).abs());
+			errorAmount.add(BigDecimal.ONE.subtract(TrigonometricFunction.getSin(x, scale).divide(Sin.getSin(x, scale), scale, RoundingMode.HALF_UP)).abs());
 			// pw.println(x + "\n" +Sin.getSin(x,
 			// scale).subtract(TrigonometricFunction.getSin(x, scale)).abs() + "\n");
 
@@ -210,7 +211,7 @@ public class SinTest {
 
 		xErr = xErr.add(Epsilon.multiply(new BigDecimal(errorAmount.indexOf(Collections.max(errorAmount)))));
 
-		System.out.println("evg err ratio     : " + sum.divide(new BigDecimal(errorAmount.size()), 20, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)) + "%");
+		System.out.println("evg err ratio     : " + sum.divide(new BigDecimal(errorAmount.size()), 20, RoundingMode.HALF_UP).multiply(new BigDecimal(100)) + "%");
 
 		System.out.println("highest err ratio : " + Collections.max(errorAmount).multiply(new BigDecimal(100)) + "%" + "\nin x = " + xErr);
 

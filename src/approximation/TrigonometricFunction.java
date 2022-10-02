@@ -2,6 +2,7 @@ package approximation;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -95,7 +96,7 @@ public class TrigonometricFunction {
 			return x;
 		if (x.compareTo(useCubicFunc) <= 0)
 			return x.multiply(minusZeroOne).multiply(x.subtract(PI)).multiply(x.add(PI)).setScale(scale,
-					BigDecimal.ROUND_HALF_UP);
+					RoundingMode.HALF_UP);
 
 		if (x.compareTo(twoPI) > 0)
 			return getSin(x.remainder(twoPI, new MathContext(x.precision())), scale);
@@ -105,9 +106,9 @@ public class TrigonometricFunction {
 			return getSin(PI.subtract(x), scale);
 
 		if (x.compareTo(useA2) <= 0)
-			return a1.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, BigDecimal.ROUND_HALF_UP);
+			return a1.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, RoundingMode.HALF_UP);
 
-		return a2.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, BigDecimal.ROUND_HALF_UP);
+		return a2.multiply(x.subtract(halfPI).pow(2)).add(BigDecimal.ONE).setScale(scale, RoundingMode.HALF_UP);
 
 	}
 
@@ -175,8 +176,8 @@ public class TrigonometricFunction {
 		BigDecimal half = new BigDecimal("0.5");
 		BigDecimal Epsilon = new BigDecimal("0.00001");
 		// BigDecimal a = new BigDecimal("96").divide(PI.pow(3), scale,
-		// BigDecimal.ROUND_HALF_UP).subtract(new BigDecimal("24").divide(PI.pow(2),
-		// scale, BigDecimal.ROUND_HALF_UP));
+		// RoundingMode.HALF_UP).subtract(new BigDecimal("24").divide(PI.pow(2),
+		// scale, RoundingMode.HALF_UP));
 		// BigDecimal b = new BigDecimal("0.1");
 
 		// for (; a.compareTo(new BigDecimal("-0.445")) >= 0 ; a = a.add(new
@@ -205,7 +206,7 @@ public class TrigonometricFunction {
 
 		}
 
-		System.out.println("evg : " + sum.divide(new BigDecimal(error.size()), 20, BigDecimal.ROUND_HALF_UP));
+		System.out.println("evg : " + sum.divide(new BigDecimal(error.size()), 20, RoundingMode.HALF_UP));
 		System.out.println();
 		error = new LinkedList<>();
 
@@ -221,7 +222,7 @@ public class TrigonometricFunction {
 	 * 
 	 * //for (BigDecimal a = new BigDecimal("0.5") ; a.compareTo(new
 	 * BigDecimal("1.5")) < 0 ; a = a.add(Epsilon) ) { //BigDecimal a = new
-	 * BigDecimal("96").divide(PI.pow(3), scale, BigDecimal.ROUND_HALF_UP)
+	 * BigDecimal("96").divide(PI.pow(3), scale, RoundingMode.HALF_UP)
 	 * BigDecimal a = new BigDecimal(
 	 * "0.6644388981710444470514099410686507712294696780239781942252285672359150291779164070806172475033658208505038042490639962623163895954602589466423674834494254739974578872956799335207985308140803534511382175030172960978788181795244382831802166481890987147905855296375325746881434941161170606905727469417149879115385783438468840945679653995664842305788096580825098747356529607971779506614804368335872949599448658603916471726159744643243926376386442085232364688688436432064181318849975045035647737010204935967846456875405029"
 	 * ); for (BigDecimal b = new BigDecimal("-0.5") ; b.compareTo(new
@@ -232,7 +233,7 @@ public class TrigonometricFunction {
 	 * 
 	 * BigDecimal y0 = a.multiply(x).add(b); BigDecimal result =
 	 * BigDecimal.ONE.subtract(y0.divide(Sin.getSin(x, scale), scale,
-	 * BigDecimal.ROUND_HALF_UP)).abs();
+	 * RoundingMode.HALF_UP)).abs();
 	 * 
 	 * if (nums[2].compareTo(result) >= 0) { nums[0] = a; nums[1] = b; nums[2] =
 	 * result; } //System.out.println(x); } System.out.println("one loop of b" + b);

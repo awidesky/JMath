@@ -1,6 +1,7 @@
 package taylorSeries;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class E {
 
@@ -23,7 +24,7 @@ public class E {
 		
 		do {
 			
-			num = BigDecimal.ONE.divide(divider, scale + cutOff, BigDecimal.ROUND_HALF_UP).multiply(x);
+			num = BigDecimal.ONE.divide(divider, scale + cutOff, RoundingMode.HALF_UP).multiply(x);
 			e = e.add(num);
 			
 			x = x.multiply(x);
@@ -35,7 +36,7 @@ public class E {
 		//System.err.println(num);
 		//System.err.println(new BigDecimal("0.1").pow(scale + cutOff));
 		
-		return e.setScale(scale, BigDecimal.ROUND_HALF_UP);
+		return e.setScale(scale, RoundingMode.HALF_UP);
 		
 	}
 	

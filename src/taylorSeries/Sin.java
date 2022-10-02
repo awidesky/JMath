@@ -2,6 +2,7 @@ package taylorSeries;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Sin {
 
@@ -41,13 +42,13 @@ public class Sin {
 			i = i.add(BigDecimal.ONE);
 			divisor = divisor.multiply(i);
 			
-			num = dividend.divide(divisor, scale + cutOff, BigDecimal.ROUND_HALF_UP);
+			num = dividend.divide(divisor, scale + cutOff, RoundingMode.HALF_UP);
 			
 			result = result.add(num);
 
 		} while(num.abs().compareTo(new BigDecimal("0.1").pow(scale + cutOff)) > 0);
 		
-		return result.setScale(scale, BigDecimal.ROUND_HALF_UP);
+		return result.setScale(scale, RoundingMode.HALF_UP);
 		
 	}
 

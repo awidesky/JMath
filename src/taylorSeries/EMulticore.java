@@ -1,6 +1,7 @@
 package taylorSeries;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class EMulticore { //TODO : any way for calculating with thread pool?
 
@@ -27,7 +28,7 @@ public class EMulticore { //TODO : any way for calculating with thread pool?
 
 		do {
 
-			num = BigDecimal.ONE.divide(divider, scale + cutOff, BigDecimal.ROUND_HALF_UP).multiply(x);
+			num = BigDecimal.ONE.divide(divider, scale + cutOff, RoundingMode.HALF_UP).multiply(x);
 			e = e.add(num);
 
 			x = x.multiply(x);
